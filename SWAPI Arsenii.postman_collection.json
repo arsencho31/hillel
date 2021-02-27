@@ -1,0 +1,165 @@
+{
+	"info": {
+		"_postman_id": "1df082fd-acce-4269-81b3-89b5716b1d6b",
+		"name": "SWAPI Arsenii",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "поиск человека с id=1 (Luke Skywalker)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('поиск Люка Скайвокера',\r",
+							"function(){\r",
+							"    const answer = pm.response.json()\r",
+							"    pm.expect(answer.results[0].name).to.be.equal('Luke Skywalker')\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://swapi.dev/api/people",
+					"protocol": "https",
+					"host": [
+						"swapi",
+						"dev"
+					],
+					"path": [
+						"api",
+						"people"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "по его homeworld найти планету, проверить ее name (Tatooine) и population (200000)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('(мы нашли код планеты (1)) ТЕПЕРЬ ПРОВЕРЯЕМ НАЗВАНИЕ!',\r",
+							"function(){\r",
+							"    const answer = pm.response.json()\r",
+							"    pm.expect(answer.name).to.be.equal('Tatooine')\r",
+							"    pm.expect(answer.population).to.be.equal('200000')\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://swapi.dev/api/planets/1/",
+					"protocol": "http",
+					"host": [
+						"swapi",
+						"dev"
+					],
+					"path": [
+						"api",
+						"planets",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "для первого в списке этой планеты фильма проверить title (Attack of the Clones)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('(мы нашли первый фильм в списке этой планеты) ТЕПЕРЬ ПРОВЕРЯЕМ название Attack of the Clones!',\r",
+							"function(){\r",
+							"    const answer = pm.response.json()\r",
+							"    pm.expect(answer.title).to.be.equal('Attack of the Clones')\r",
+							"})\r",
+							"// неудачно, так как фильм называется \"A new hope\"\r",
+							"\r",
+							"//pm.test('(мы нашли первый фильм в списке этой планеты) ТЕПЕРЬ ПРОВЕРЯЕМ Attack of the Clones!',\r",
+							"//function(){\r",
+							" //   const answer = pm.response.json()\r",
+							"  //  pm.expect(answer.title).to.be.equal('Attack of the Clones')\r",
+							"//}) \r",
+							"// ЭТОТ ТЕСТ МОЖНО ПРОВЕСТИ ДЛЯ ПЯТОГО ФИЛЬМА, так как именно он с названием 'Attack of the Clones!'. Для этого для запроса GET используем ссылку http://swapi.dev/api/films/5/"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://swapi.dev/api/films/1/",
+					"protocol": "http",
+					"host": [
+						"swapi",
+						"dev"
+					],
+					"path": [
+						"api",
+						"films",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "проверить, принадлежит ли фильму Luke Skywalker и его планета",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('(Проверяем, принадлежит ли фильму Люк Скайвокер и его планета!',\r",
+							"function(){\r",
+							"    const jsonData = pm.response.json()\r",
+							"    pm.expect(jsonData).to.be.property(\"characters\").includes('http://swapi.dev/api/people/1/')\r",
+							"    pm.expect(jsonData).to.be.property(\"planets\").includes('http://swapi.dev/api/planets/1/')\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://swapi.dev/api/films/1/",
+					"protocol": "http",
+					"host": [
+						"swapi",
+						"dev"
+					],
+					"path": [
+						"api",
+						"films",
+						"1",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
